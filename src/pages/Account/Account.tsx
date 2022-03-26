@@ -48,7 +48,6 @@ const AccountComp = () => {
     setNewBalanceDate(new Date());
   };
   const removeBalance = (id: number) => {
-    console.log("removeBalance...", id);
     dispatch(removeBalanceAction(id));
   };
 
@@ -82,7 +81,6 @@ const AccountComp = () => {
   const [newBalanceAmount, setNewBalanceAmount] = useState(0);
 
   const account = accounts.find((x) => x.id === choosenAccountId);
-  console.log("account", account);
 
   return (
     <Container style={{ marginTop: 10 }}>
@@ -168,6 +166,7 @@ const AccountComp = () => {
                 <Input
                   type="date"
                   value={format(newBalanceDate, "yyyy-MM-dd")}
+                  disabled={loading}
                   onChange={({ target: { value } }) => {
                     if (!value) {
                       return;
@@ -180,8 +179,14 @@ const AccountComp = () => {
                 <Input
                   type="number"
                   value={newBalanceAmount === 0 ? "" : newBalanceAmount}
+                  disabled={loading}
                   onChange={({ target: { value } }) => {
                     setNewBalanceAmount(Number(value));
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      addBalance(account.id);
+                    }
                   }}
                 />
               </td>
