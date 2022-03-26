@@ -7,12 +7,15 @@ import type { Account } from "../../core/redux/types";
 
 const TODAY = new Date();
 
-type MonthlyBalance = Record<string, number>;
+const average = (arr: number[]) => arr.reduce((a, b) => a + b) / arr.length;
 
-type hej = {
+type MonthlyBalance = Record<string, number>;
+type MonthlyBalances = Record<string, number[]>;
+
+type AccountDisplay = {
   id: Account["id"];
   name: Account["name"];
-  balance: Record<string, number>;
+  avarageBalances: MonthlyBalance;
 };
 
 const Home = () => {
@@ -21,40 +24,38 @@ const Home = () => {
   let totalBalance = 0;
   const totalBalancePerMonth: MonthlyBalance = {};
 
-  const tja: hej[] = accounts.map((x) => {
+  const accountsDisplay: AccountDisplay[] = accounts.map((x) => {
     totalBalance += x.currentBalance;
 
-    const balancePerMonth: MonthlyBalance = {};
-    const expensesPerMonth: MonthlyBalance = {};
+    const balancePerMonth: MonthlyBalances = {};
+    const avarageBalances: MonthlyBalance = {};
 
     x.balances.forEach((y) => {
       const month = format(new Date(y.date), "yyyyMM");
-      let balance = balancePerMonth[month] || 0;
-      balance += y.amount;
-      balancePerMonth[month] = balance;
+      const balances = balancePerMonth[month] || [];
+      balances.push(y.amount);
+      balancePerMonth[month] = balances;
+    });
 
-      let tbpm = totalBalancePerMonth[month] || 0;
-      tbpm += y.amount;
-      totalBalancePerMonth[month] = tbpm;
-
-      if (y.amount < 0) {
-        let expenses = expensesPerMonth[month] || 0;
-        expenses += y.amount;
-        expensesPerMonth[month] = expenses;
-      }
+    Object.keys(balancePerMonth).forEach((month) => {
+      const balances = balancePerMonth[month] || [];
+      const avarageBalance = average(balances);
+      avarageBalances[month] = avarageBalance;
+      totalBalancePerMonth[month] =
+        (totalBalancePerMonth[month] || 0) + avarageBalance;
     });
 
     return {
       id: x.id,
       name: x.name,
-      balance: balancePerMonth,
+      avarageBalances,
     };
   });
 
   return (
     <Container style={{ marginTop: 10 }}>
       <Alert color={totalBalance > 0 ? "success" : "danger"}>
-        Total: {displayInYen(totalBalance)}
+        Total Current Balance: {displayInYen(totalBalance)}
       </Alert>
 
       <h2>Balances</h2>
@@ -75,7 +76,7 @@ const Home = () => {
           </tr>
         </thead>
         <tbody>
-          {tja.map((x) => {
+          {accountsDisplay.map((x) => {
             return (
               <tr key={x.name}>
                 <td>{x.id}</td>
@@ -84,7 +85,7 @@ const Home = () => {
                   const date = new Date();
                   date.setMonth(TODAY.getMonth() - i);
                   const month = format(date, "yyyyMM");
-                  const b = x.balance[month] || 0;
+                  const b = x.avarageBalances[month] || 0;
                   return (
                     <td key={i}>{b > 0 || b < 0 ? displayInYen(b) : ""}</td>
                   );
@@ -95,7 +96,7 @@ const Home = () => {
           <tr>
             <td></td>
             <td>
-              <b>Total</b>
+              <b>Total Average</b>
             </td>
             {Array.from(Array(6)).map((_, i) => {
               const date = new Date();
