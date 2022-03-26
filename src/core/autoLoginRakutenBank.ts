@@ -1,6 +1,4 @@
-// import type { Web } from 'electron';
-
-const autoLogin = async (_webView: any) => {
+const autoLogin = async (_webView: unknown) => {
   const username = process.env.REACT_APP_RAKUTEN_BANK_USERNAME;
   if (!username) {
     throw new Error('REACT_APP_RAKUTEN_BANK_USERNAME not set!');

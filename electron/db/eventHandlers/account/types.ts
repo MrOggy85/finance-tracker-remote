@@ -1,5 +1,5 @@
-import * as accountRepo from "../../account/repo";
-import * as balanceRepo from "../../balance/repo";
+import * as accountRepo from '../../account/repo';
+import * as balanceRepo from '../../balance/repo';
 
 export type GetAll = {
   entity: 'account';
@@ -43,8 +43,15 @@ export type Update = {
   arg: {
     id: Parameters<typeof accountRepo['get']>[0];
     name: Parameters<typeof accountRepo['add']>[0];
-  }
+  };
 };
 
-type Account = GetAll | Get | Add | AddBalance | RemoveBalance | Remove | Update;
+type Account =
+  | GetAll
+  | Get
+  | Add
+  | AddBalance
+  | RemoveBalance
+  | Remove
+  | Update;
 export default Account;

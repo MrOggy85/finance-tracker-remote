@@ -1,4 +1,3 @@
-
 type Balance = {
   id: number;
   amount: number;
@@ -6,7 +5,7 @@ type Balance = {
    * Date in ISO Format
    */
   date: string;
-}
+};
 
 export type Account = {
   id: number;

@@ -23,7 +23,10 @@ export async function add(name: string) {
 
 type CurrencyValueAdd = Omit<CurrencyValue, 'id' | 'currency'>;
 
-export async function addCurrencyValuation(newCurrencyValue: CurrencyValueAdd, currencyId: Currency['id']) {
+export async function addCurrencyValuation(
+  newCurrencyValue: CurrencyValueAdd,
+  currencyId: Currency['id']
+) {
   const currencyValue = new CurrencyValue();
   currencyValue.amount = newCurrencyValue.amount;
   currencyValue.date = newCurrencyValue.date;
@@ -37,14 +40,17 @@ export async function addCurrencyValuation(newCurrencyValue: CurrencyValueAdd, c
 
 export async function getAll() {
   const repository = await getRepository();
-  const all = await repository.find({ relations: ["currencyValue"] });
+  const all = await repository.find({ relations: ['currencyValue'] });
 
   return all;
 }
 
 export async function get(id: number) {
   const repository = await getRepository();
-  const currency = await repository.findOne({ id }, { relations: ["currencyValue"] });
+  const currency = await repository.findOne({
+    where: { id },
+    relations: ['currencyValue'],
+  });
 
   return currency;
 }

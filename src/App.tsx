@@ -1,16 +1,16 @@
-import { Routes, Route, Link, useLocation } from "react-router-dom";
-import Nav from "react-bootstrap/Nav";
-import NavItem from "react-bootstrap/NavItem";
-import WithRedux from "./core/redux/WithRedux";
-import styles from "./App.module.css";
-import Home from "./pages/Home";
-import Future from "./pages/Future";
-import DailyCheckIn from "./pages/DailyCheckIn";
-import Account from "./pages/Account";
-import BankTab from "./components/BankTab";
-import { ComponentProps } from "react";
-import autoLoginPrestia from "./core/autoLoginPrestia";
-import autoLoginRakutenBank from "./core/autoLoginRakutenBank";
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import Nav from 'react-bootstrap/Nav';
+import NavItem from 'react-bootstrap/NavItem';
+import WithRedux from './core/redux/WithRedux';
+import styles from './App.module.css';
+import Home from './pages/Home';
+import Future from './pages/Future';
+import DailyCheckIn from './pages/DailyCheckIn';
+import Account from './pages/Account';
+import BankTab from './components/BankTab';
+import { ComponentProps } from 'react';
+import autoLoginPrestia from './core/autoLoginPrestia';
+import autoLoginRakutenBank from './core/autoLoginRakutenBank';
 
 const HomeWithRedux = WithRedux(Home);
 const AccountWithRedux = WithRedux(Account);
@@ -27,7 +27,7 @@ const LinkItem = ({ url, text }: LinkItemProps) => {
   ) : (
     <Link
       className={`${styles.link} ${
-        window.location.pathname === url ? "active" : ""
+        window.location.pathname === url ? 'active' : ''
       }`}
       to={url}
     >
@@ -69,10 +69,10 @@ function App() {
         <Route path="/" element={<HomeWithRedux />} />
         <Route path="/account" element={<AccountWithRedux />} />
       </Routes>
-      <Future visible={location.pathname === "/future"} />
-      <DailyCheckIn visible={location.pathname === "/daily-check-in"} />
+      <Future visible={location.pathname === '/future'} />
+      <DailyCheckIn visible={location.pathname === '/daily-check-in'} />
       <BankTabWithRedux
-        visible={location.pathname === "/prestia"}
+        visible={location.pathname === '/prestia'}
         url="https://login.smbctb.co.jp/ib/portal/POSNIN1prestiatop.prst?LOCALE=en_JP"
         accountName="Prestia"
         bottomBarBackgroundColor="#1C4733"
@@ -80,7 +80,7 @@ function App() {
         autoLogin={autoLoginPrestia}
       />
       <BankTabWithRedux
-        visible={location.pathname === "/rakuten-bank"}
+        visible={location.pathname === '/rakuten-bank'}
         url="https://fes.rakuten-bank.co.jp/MS/main/RbS?CurrentPageID=START&&COMMAND=LOGIN"
         accountName="Rakuten"
         bottomBarBackgroundColor="#CA2C27"
@@ -88,7 +88,7 @@ function App() {
         autoLogin={autoLoginRakutenBank}
       />
       <BankTabWithRedux
-        visible={location.pathname === "/global-pass"}
+        visible={location.pathname === '/global-pass'}
         url="https://www.debit.vpass.ne.jp/p/login/RW1312010001?cc=01006"
         accountName="Prestia"
         bottomBarBackgroundColor="#CA2C27"

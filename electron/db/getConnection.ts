@@ -1,8 +1,8 @@
-import "reflect-metadata";
-import { Connection, createConnection } from "typeorm";
-import Account from "./account/Account";
-import Balance from "./balance/Balance";
-import { Currency, CurrencyValue } from "./currency/Currency";
+import 'reflect-metadata';
+import { Connection, createConnection } from 'typeorm';
+import Account from './account/Account';
+import Balance from './balance/Balance';
+import { Currency, CurrencyValue } from './currency/Currency';
 
 const HOST = process.env.DB_HOST;
 const DATABASE = process.env.DB_NAME;
@@ -17,7 +17,7 @@ async function getConnection() {
     return connection;
   }
   connection = await createConnection({
-    type: "postgres",
+    type: 'postgres',
     database: DATABASE,
     host: HOST,
     username: USER,

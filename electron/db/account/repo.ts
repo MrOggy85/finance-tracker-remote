@@ -17,14 +17,17 @@ export async function add(name: string) {
 
 export async function getAll() {
   const repository = await getRepository();
-  const all = await repository.find({ relations: ["balances"] });
+  const all = await repository.find({ relations: ['balances'] });
 
   return all;
 }
 
 export async function get(id: number) {
   const repository = await getRepository();
-  const entity = await repository.findOne({ id }, { relations: ["balances"] });
+  const entity = await repository.findOne({
+    where: { id },
+    relations: ['balances'],
+  });
 
   return entity;
 }

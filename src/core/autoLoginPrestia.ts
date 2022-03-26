@@ -1,5 +1,4 @@
-// import type { WebviewTag } from 'electron';
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const autoLogin = async (webView: any) => {
   const username = process.env.REACT_APP_PRESTIA_USERNAME;
   if (!username) {
@@ -13,44 +12,44 @@ const autoLogin = async (webView: any) => {
   await webView.insertText(username);
   await webView.sendInputEvent({
     keyCode: 'Tab',
-    type: 'keyDown'
+    type: 'keyDown',
   });
   await webView.sendInputEvent({
     keyCode: 'Tab',
-    type: 'keyUp'
+    type: 'keyUp',
   });
   await webView.sendInputEvent({
     keyCode: 'Tab',
-    type: 'keyDown'
+    type: 'keyDown',
   });
   await webView.sendInputEvent({
     keyCode: 'Tab',
-    type: 'keyUp'
+    type: 'keyUp',
   });
   await webView.insertText(password);
   await webView.sendInputEvent({
     keyCode: 'Tab',
-    type: 'keyDown'
+    type: 'keyDown',
   });
   await webView.sendInputEvent({
     keyCode: 'Tab',
-    type: 'keyUp'
+    type: 'keyUp',
   });
   await webView.sendInputEvent({
     keyCode: 'Tab',
-    type: 'keyDown'
+    type: 'keyDown',
   });
   await webView.sendInputEvent({
     keyCode: 'Tab',
-    type: 'keyUp'
+    type: 'keyUp',
   });
   await webView.sendInputEvent({
     keyCode: 'Enter',
-    type: 'keyDown'
+    type: 'keyDown',
   });
   await webView.sendInputEvent({
     keyCode: 'Enter',
-    type: 'keyUp'
+    type: 'keyUp',
   });
 };
 

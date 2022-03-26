@@ -1,5 +1,5 @@
-import Balance from "../balance/Balance";
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import Balance from '../balance/Balance';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity()
 export default class Account {
@@ -11,6 +11,6 @@ export default class Account {
   })
   name: string;
 
-  @OneToMany(() => Balance, balance => balance.account)
+  @OneToMany(() => Balance, (balance) => balance.account)
   balances: Balance[];
 }

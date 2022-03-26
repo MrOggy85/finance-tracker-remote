@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToOne,
+} from 'typeorm';
 
 @Entity()
 export class Currency {
@@ -10,7 +16,7 @@ export class Currency {
   })
   name: string;
 
-  @OneToMany(() => CurrencyValue, currencyValue => currencyValue.currency)
+  @OneToMany(() => CurrencyValue, (currencyValue) => currencyValue.currency)
   values: CurrencyValue[];
 }
 
@@ -20,15 +26,15 @@ export class CurrencyValue {
   id: number;
 
   @Column({
-    comment: "Amount of JPY the currency was worth at the specified date"
+    comment: 'Amount of JPY the currency was worth at the specified date',
   })
   amount: number;
 
   @Column({
-    comment: "The Date of evaluation. Should use the closing valuation"
+    comment: 'The Date of evaluation. Should use the closing valuation',
   })
   date: Date;
 
-  @ManyToOne(() => Currency, currency => currency.values)
+  @ManyToOne(() => Currency, (currency) => currency.values)
   currency: Currency;
 }

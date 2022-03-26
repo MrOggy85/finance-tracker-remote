@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { Container, FormGroup, Input, Label, ListGroup, ListGroupItem } from 'reactstrap';
+import {
+  Container,
+  FormGroup,
+  Input,
+  Label,
+  ListGroup,
+  ListGroupItem,
+} from 'reactstrap';
 import styles from './styles.module.css';
 
 type Props = {
@@ -13,12 +20,21 @@ type CheckListItemProps = {
   onChecked: (checked: boolean) => void;
 };
 
-const CheckListItem = ({ text, extraText, checked, onChecked }: CheckListItemProps) => {
+const CheckListItem = ({
+  text,
+  extraText,
+  checked,
+  onChecked,
+}: CheckListItemProps) => {
   return (
     <ListGroupItem>
       <FormGroup check>
         <Label check>
-          <Input type="checkbox" checked={checked} onChange={({ target: { checked } }) => onChecked(checked)} />{' '}
+          <Input
+            type="checkbox"
+            checked={checked}
+            onChange={({ target: { checked } }) => onChecked(checked)}
+          />{' '}
           {text}
         </Label>
         <span className={styles.extraText}>{extraText}</span>

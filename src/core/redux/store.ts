@@ -3,7 +3,7 @@ import rootReducer from './rootReducer';
 
 declare module 'react-redux' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  export interface DefaultRootState extends RootState { }
+  export interface DefaultRootState extends RootState {}
 }
 
 const store = configureStore({

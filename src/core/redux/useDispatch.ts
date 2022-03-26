@@ -4,7 +4,8 @@ import type { AnyObject } from '../../types';
 import type { RootState } from './store';
 
 function useDispatch() {
-  const dispatch = reduxUseDispatch<ThunkDispatch<RootState, AnyObject, Action<string>>>();
+  const dispatch =
+    reduxUseDispatch<ThunkDispatch<RootState, AnyObject, Action<string>>>();
   return dispatch;
 }
 

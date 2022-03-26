@@ -1,5 +1,5 @@
-import Account from "../account/Account";
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import Account from '../account/Account';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
 @Entity()
 export default class Balance {
@@ -9,12 +9,12 @@ export default class Balance {
   @Column()
   amount: number;
 
-  @Column("timestamp")
+  @Column('timestamp')
   date: Date;
 
-  @ManyToOne(() => Account, account => account.balances, {
+  @ManyToOne(() => Account, (account) => account.balances, {
     cascade: true,
-    onDelete: 'CASCADE'
+    onDelete: 'CASCADE',
   })
   account: Account;
 }

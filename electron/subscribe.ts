@@ -5,7 +5,7 @@ const channels = {
     Send: 'repo',
     Ok: 'repo-ok',
     Error: 'repo-error',
-  }
+  },
 };
 
 type Callback = (arg: any) => Promise<any>;

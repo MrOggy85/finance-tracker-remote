@@ -4,36 +4,35 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
+  ButtonDropdown,
   Input,
   InputGroup,
-  InputGroupAddon,
-  InputGroupButtonDropdown,
   InputGroupText,
   Spinner,
   Table,
-} from "reactstrap";
-import { useSelector } from "react-redux";
-import format from "date-fns/format";
-import parseISO from "date-fns/parseISO";
-import { useState } from "react";
-import { FiTrash2, FiEdit, FiCheck, FiX } from "react-icons/fi";
-import type { Account } from "../../core/redux/types";
+} from 'reactstrap';
+import { useSelector } from 'react-redux';
+import format from 'date-fns/format';
+import parseISO from 'date-fns/parseISO';
+import { useState } from 'react';
+import { FiTrash2, FiEdit, FiCheck, FiX } from 'react-icons/fi';
+import type { Account } from '../../core/redux/types';
 import {
   removeAccount as removeAccountAction,
   removeBalance as removeBalanceAction,
   addAccount as addAccountAction,
   addBalance as addBalanceAction,
   rename,
-} from "../../core/redux/accountSlice";
-import useDispatch from "../../core/redux/useDispatch";
-import displayInYen from "../../core/displayInYen";
+} from '../../core/redux/accountSlice';
+import useDispatch from '../../core/redux/useDispatch';
+import displayInYen from '../../core/displayInYen';
 
 const AccountComp = () => {
   const dispatch = useDispatch();
   const accounts = useSelector((x) => x.accounts.accounts);
   const loading = useSelector((x) => x.accounts.loading);
   const [choosenAccountId, setChoosenAccountId] = useState<
-    Account["id"] | null
+    Account['id'] | null
   >(null);
   const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
 
@@ -56,7 +55,7 @@ const AccountComp = () => {
   };
   const addAccount = (name: string) => {
     dispatch(addAccountAction(name));
-    setNewAccountTitle("");
+    setNewAccountTitle('');
   };
   const editAccountStart = (id: number, name: string) => {
     setEditAccountTitle(name);
@@ -65,17 +64,17 @@ const AccountComp = () => {
   const editAccountFinish = () => {
     dispatch(rename({ id: editId, name: editAccountTitle }));
 
-    setEditAccountTitle("");
+    setEditAccountTitle('');
     setEditId(-1);
   };
   const editAccountCancel = () => {
-    setEditAccountTitle("");
+    setEditAccountTitle('');
     setEditId(-1);
   };
 
   const [editId, setEditId] = useState(-1);
-  const [newAccountTitle, setNewAccountTitle] = useState("");
-  const [editAccountTitle, setEditAccountTitle] = useState("");
+  const [newAccountTitle, setNewAccountTitle] = useState('');
+  const [editAccountTitle, setEditAccountTitle] = useState('');
 
   const [newBalanceDate, setNewBalanceDate] = useState(new Date());
   const [newBalanceAmount, setNewBalanceAmount] = useState(0);
@@ -85,16 +84,14 @@ const AccountComp = () => {
   return (
     <Container style={{ marginTop: 10 }}>
       <InputGroup style={{ marginBottom: 5 }}>
-        <InputGroupAddon addonType="prepend" style={{ marginRight: 5 }}>
-          <InputGroupText>Account</InputGroupText>
-        </InputGroupAddon>
-        <InputGroupButtonDropdown
+        <InputGroupText>Account</InputGroupText>
+        <ButtonDropdown
           addonType="append"
           isOpen={accountDropdownOpen}
           toggle={toggleAccountDropDown}
         >
           <DropdownToggle caret color="primary">
-            {account?.name || "Choose Account"}
+            {account?.name || 'Choose Account'}
           </DropdownToggle>
           <DropdownMenu>
             {accounts.map((x) => (
@@ -112,17 +109,17 @@ const AccountComp = () => {
               </DropdownItem>
             ))}
           </DropdownMenu>
-        </InputGroupButtonDropdown>
+        </ButtonDropdown>
       </InputGroup>
 
       <Table bordered>
         <thead>
           <tr>
-            <th style={{ width: "115px" }}></th>
-            <th style={{ width: "50px" }}>ID</th>
-            <th style={{ width: "210px" }}>Date</th>
-            <th style={{ width: "210px" }}>Amount</th>
-            <th style={{ display: "flex" }}></th>
+            <th style={{ width: '115px' }}></th>
+            <th style={{ width: '50px' }}>ID</th>
+            <th style={{ width: '210px' }}>Date</th>
+            <th style={{ width: '210px' }}>Amount</th>
+            <th style={{ display: 'flex' }}></th>
           </tr>
         </thead>
         <tbody>
@@ -142,7 +139,7 @@ const AccountComp = () => {
               </td>
 
               <td>{x.id}</td>
-              <td>{format(parseISO(x.date), "yyyy-MM-dd")}</td>
+              <td>{format(parseISO(x.date), 'yyyy-MM-dd')}</td>
               <td>{displayInYen(x.amount)}</td>
             </tr>
           ))}
@@ -158,14 +155,14 @@ const AccountComp = () => {
                     addBalance(account.id);
                   }}
                 >
-                  {loading ? <Spinner size="sm"> </Spinner> : "ADD"}
+                  {loading ? <Spinner size="sm"> </Spinner> : 'ADD'}
                 </Button>
               </td>
               <td />
               <td>
                 <Input
                   type="date"
-                  value={format(newBalanceDate, "yyyy-MM-dd")}
+                  value={format(newBalanceDate, 'yyyy-MM-dd')}
                   disabled={loading}
                   onChange={({ target: { value } }) => {
                     if (!value) {
@@ -178,13 +175,13 @@ const AccountComp = () => {
               <td>
                 <Input
                   type="number"
-                  value={newBalanceAmount === 0 ? "" : newBalanceAmount}
+                  value={newBalanceAmount === 0 ? '' : newBalanceAmount}
                   disabled={loading}
                   onChange={({ target: { value } }) => {
                     setNewBalanceAmount(Number(value));
                   }}
                   onKeyDown={(event) => {
-                    if (event.key === "Enter") {
+                    if (event.key === 'Enter') {
                       addBalance(account.id);
                     }
                   }}
@@ -198,11 +195,11 @@ const AccountComp = () => {
       <Table bordered>
         <thead>
           <tr>
-            <th style={{ width: "115px" }}></th>
-            <th style={{ width: "50px" }}>ID</th>
-            <th style={{ width: "250px" }}>Name</th>
-            <th style={{ width: "150px" }}>Current Balance</th>
-            <th style={{ display: "flex" }}></th>
+            <th style={{ width: '115px' }}></th>
+            <th style={{ width: '50px' }}>ID</th>
+            <th style={{ width: '250px' }}>Name</th>
+            <th style={{ width: '150px' }}>Current Balance</th>
+            <th style={{ display: 'flex' }}></th>
           </tr>
         </thead>
         <tbody>
@@ -286,7 +283,7 @@ const AccountComp = () => {
                   addAccount(newAccountTitle);
                 }}
               >
-                {loading ? <Spinner size="sm"> </Spinner> : "ADD"}
+                {loading ? <Spinner size="sm"> </Spinner> : 'ADD'}
               </Button>
             </td>
             <td />

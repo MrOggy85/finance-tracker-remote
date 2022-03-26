@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Container, Input, InputGroup, InputGroupAddon, InputGroupText } from "reactstrap";
+import { useState } from 'react';
+import { Container, Input, InputGroup, InputGroupText } from 'reactstrap';
 import Alert from 'react-bootstrap/Alert';
-import displayInYen from "../../core/displayInYen";
+import displayInYen from '../../core/displayInYen';
 
 type InputFieldProps = {
   label: string;
@@ -12,13 +12,26 @@ type InputFieldProps = {
   step?: number;
 };
 
-const InputField = ({ label, value, onChange, displayAfter, disabled, step }: InputFieldProps) => (
+const InputField = ({
+  label,
+  value,
+  onChange,
+  displayAfter,
+  disabled,
+  step,
+}: InputFieldProps) => (
   <InputGroup>
-    <InputGroupAddon addonType="prepend">
-      <InputGroupText>{label}</InputGroupText>
-    </InputGroupAddon>
-    <Input step={step} disabled={disabled} type="number" value={value} onChange={({ target: { value } }) => { onChange(Number(value)); }} />
-    <InputGroupAddon addonType="append">{displayAfter}</InputGroupAddon>
+    <InputGroupText>{label}</InputGroupText>
+    <Input
+      step={step}
+      disabled={disabled}
+      type="number"
+      value={value}
+      onChange={({ target: { value } }) => {
+        onChange(Number(value));
+      }}
+    />
+    <InputGroupText>{displayAfter}</InputGroupText>
   </InputGroup>
 );
 
@@ -45,7 +58,7 @@ const Future = ({ visible }: Props) => {
   let amount = initAmount;
   for (let index = 0; index < years; index++) {
     const yearlyInterest = amount * interest;
-    amount = amount + yearlyInterest + (monthlySavingAmount * 12);
+    amount = amount + yearlyInterest + monthlySavingAmount * 12;
   }
 
   let retirementFund = amount;
@@ -54,8 +67,15 @@ const Future = ({ visible }: Props) => {
     retirementFund = retirementFund - yearlySalary + yearlyInterest;
   }
 
-  const displayMonthlySaving = `${displayInYen(monthlySavingAmount)} Percentage of salary: ${(((monthlySavingAmount * 12) / yearlySalary) * 100).toFixed(0)}%`;
-  const displayRetirementYear = `Years: ${years} (Retirement Year: ${retirementYear + currentYear})`;
+  const displayMonthlySaving = `${displayInYen(
+    monthlySavingAmount
+  )} Percentage of salary: ${(
+    ((monthlySavingAmount * 12) / yearlySalary) *
+    100
+  ).toFixed(0)}%`;
+  const displayRetirementYear = `Years: ${years} (Retirement Year: ${
+    retirementYear + currentYear
+  })`;
 
   if (!visible) {
     return null;
@@ -112,7 +132,8 @@ const Future = ({ visible }: Props) => {
         Total at time of Retirement: {displayInYen(amount)}
       </Alert>
       <Alert color={retirementFund < 0 ? 'danger' : 'success'}>
-        Retirement Fund at Death (age: {deathAge}): {displayInYen(retirementFund)}
+        Retirement Fund at Death (age: {deathAge}):{' '}
+        {displayInYen(retirementFund)}
       </Alert>
     </Container>
   );

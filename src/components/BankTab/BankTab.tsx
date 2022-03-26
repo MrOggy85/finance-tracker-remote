@@ -1,6 +1,6 @@
-import { useRef } from "react";
-import { Button, Col, Container, Row } from "reactstrap";
-import BrowserTab from "../../components/BrowserTab";
+import { useRef } from 'react';
+import { Button, Col, Container, Row } from 'reactstrap';
+import BrowserTab from '../../components/BrowserTab';
 
 type Props = {
   visible: boolean;
@@ -8,7 +8,7 @@ type Props = {
   accountName: string;
   bottomBarBackgroundColor: string;
   bottomBarButtonColor: string;
-  autoLogin: (webViewRef: any) => void;
+  autoLogin: (webViewRef: HTMLWebViewElement) => void;
 };
 
 const BankTab = ({
@@ -18,7 +18,7 @@ const BankTab = ({
   bottomBarButtonColor,
   autoLogin,
 }: Props) => {
-  const webViewRef = useRef<any>(null);
+  const webViewRef = useRef<HTMLWebViewElement>(null);
   const onLoginClick = () => {
     const webView = webViewRef.current;
     if (!webView) {
@@ -28,7 +28,7 @@ const BankTab = ({
   };
 
   return (
-    <Container style={{ display: visible ? "block" : "none" }}>
+    <Container style={{ display: visible ? 'block' : 'none' }}>
       <Row>
         <Col xs={4}></Col>
         <Col>
@@ -42,7 +42,7 @@ const BankTab = ({
           >
             <Button onClick={onLoginClick} color={bottomBarButtonColor}>
               Login
-            </Button>{" "}
+            </Button>{' '}
           </div>
         </Col>
       </Row>

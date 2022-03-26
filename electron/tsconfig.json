@@ -10,10 +10,10 @@
     "skipLibCheck": true,
   },
   "include": [
-    ".",
+    "../electron",
     "../src/types"
   ],
   "exclude": [
-    "node_modules"
+    "../node_modules"
   ]
 }

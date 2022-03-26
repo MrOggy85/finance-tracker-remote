@@ -1,9 +1,9 @@
-import { Container, Table } from "reactstrap";
-import Alert from "react-bootstrap/Alert";
-import displayInYen from "../../core/displayInYen";
-import { useSelector } from "react-redux";
-import format from "date-fns/format";
-import type { Account } from "../../core/redux/types";
+import { Container, Table } from 'reactstrap';
+import Alert from 'react-bootstrap/Alert';
+import displayInYen from '../../core/displayInYen';
+import { useSelector } from 'react-redux';
+import format from 'date-fns/format';
+import type { Account } from '../../core/redux/types';
 
 const TODAY = new Date();
 
@@ -13,8 +13,8 @@ type MonthlyBalance = Record<string, number>;
 type MonthlyBalances = Record<string, number[]>;
 
 type AccountDisplay = {
-  id: Account["id"];
-  name: Account["name"];
+  id: Account['id'];
+  name: Account['name'];
   avarageBalances: MonthlyBalance;
 };
 
@@ -31,7 +31,7 @@ const Home = () => {
     const avarageBalances: MonthlyBalance = {};
 
     x.balances.forEach((y) => {
-      const month = format(new Date(y.date), "yyyyMM");
+      const month = format(new Date(y.date), 'yyyyMM');
       const balances = balancePerMonth[month] || [];
       balances.push(y.amount);
       balancePerMonth[month] = balances;
@@ -54,7 +54,7 @@ const Home = () => {
 
   return (
     <Container style={{ marginTop: 10 }}>
-      <Alert color={totalBalance > 0 ? "success" : "danger"}>
+      <Alert color={totalBalance > 0 ? 'success' : 'danger'}>
         Total Current Balance: {displayInYen(totalBalance)}
       </Alert>
 
@@ -84,10 +84,10 @@ const Home = () => {
                 {Array.from(Array(6)).map((_, i) => {
                   const date = new Date();
                   date.setMonth(TODAY.getMonth() - i);
-                  const month = format(date, "yyyyMM");
+                  const month = format(date, 'yyyyMM');
                   const b = x.avarageBalances[month] || 0;
                   return (
-                    <td key={i}>{b > 0 || b < 0 ? displayInYen(b) : ""}</td>
+                    <td key={i}>{b > 0 || b < 0 ? displayInYen(b) : ''}</td>
                   );
                 })}
               </tr>
@@ -101,11 +101,11 @@ const Home = () => {
             {Array.from(Array(6)).map((_, i) => {
               const date = new Date();
               date.setMonth(TODAY.getMonth() - i);
-              const month = format(date, "yyyyMM");
+              const month = format(date, 'yyyyMM');
               const b = totalBalancePerMonth[month] || 0;
               return (
                 <td key={i}>
-                  <b>{b > 0 || b < 0 ? displayInYen(b) : ""}</b>
+                  <b>{b > 0 || b < 0 ? displayInYen(b) : ''}</b>
                 </td>
               );
             })}

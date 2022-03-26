@@ -5,25 +5,23 @@ import type { Account } from './types';
 
 const NAMESPACE = 'account';
 
-export const getAll = createAsyncThunk<
-  Account[],
-  void,
-  EmptyObject
->(
+export const getAll = createAsyncThunk<Account[], void, EmptyObject>(
   `${NAMESPACE}/getAll`,
   async (_, _thunkApi) => {
     const accountEntities = await db.getAll();
 
-    const accounts: Account[] = accountEntities.map(x => {
-      const dateSortedBalances = x.balances.sort((a, b) => {
-        return b.date.getTime() - a.date.getTime()
-      }).map(x => ({
-        id: x.id,
-        amount: x.amount,
-        date: x.date.toISOString(),
-      }))
+    const accounts: Account[] = accountEntities.map((x) => {
+      const dateSortedBalances = x.balances
+        .sort((a, b) => {
+          return b.date.getTime() - a.date.getTime();
+        })
+        .map((x) => ({
+          id: x.id,
+          amount: x.amount,
+          date: x.date.toISOString(),
+        }));
 
-      const currentBalance = dateSortedBalances[0]?.amount || 0
+      const currentBalance = dateSortedBalances[0]?.amount || 0;
 
       return {
         id: x.id,
@@ -34,68 +32,50 @@ export const getAll = createAsyncThunk<
     });
 
     return accounts;
-  },
+  }
 );
 
-export const removeAccount = createAsyncThunk<
-void,
-  number,
-  EmptyObject
->(
+export const removeAccount = createAsyncThunk<void, number, EmptyObject>(
   `${NAMESPACE}/removeAccount`,
   async (id, thunkApi) => {
     await db.remove(id);
     thunkApi.dispatch(getAll());
-  },
+  }
 );
 
-export const removeBalance = createAsyncThunk<
-void,
-  number,
-  EmptyObject
->(
+export const removeBalance = createAsyncThunk<void, number, EmptyObject>(
   `${NAMESPACE}/removeBalance`,
   async (id, thunkApi) => {
     await db.removeBalance(id);
     thunkApi.dispatch(getAll());
-  },
+  }
 );
 
-export const addAccount = createAsyncThunk<
-  void,
-  string,
-  EmptyObject
->(
+export const addAccount = createAsyncThunk<void, string, EmptyObject>(
   `${NAMESPACE}/addAccount`,
   async (name, thunkApi) => {
     await db.add(name);
     thunkApi.dispatch(getAll());
-  },
+  }
 );
 
 export const addBalance = createAsyncThunk<
   void,
-  { amount: number, id: number, date: Date },
+  { amount: number; id: number; date: Date },
   EmptyObject
->(
-  `${NAMESPACE}/addBalance`,
-  async ({ amount, id, date }, thunkApi) => {
-    await db.addBalance(amount, id, date);
-    thunkApi.dispatch(getAll());
-  },
-);
+>(`${NAMESPACE}/addBalance`, async ({ amount, id, date }, thunkApi) => {
+  await db.addBalance(amount, id, date);
+  thunkApi.dispatch(getAll());
+});
 
 export const rename = createAsyncThunk<
   void,
-  { id: number, name: string },
+  { id: number; name: string },
   EmptyObject
->(
-  `${NAMESPACE}/rename`,
-  async ({id, name }, thunkApi) => {
-    await db.update(id, name);
-    thunkApi.dispatch(getAll());
-  },
-);
+>(`${NAMESPACE}/rename`, async ({ id, name }, thunkApi) => {
+  await db.update(id, name);
+  thunkApi.dispatch(getAll());
+});
 
 const accountSlice = createSlice({
   name: NAMESPACE,
@@ -110,11 +90,13 @@ const accountSlice = createSlice({
       state.loading = false;
     });
 
-    builder.addCase(removeAccount.fulfilled, (state, _) => {
-      state.loading = false;
-    }).addDefaultCase((state) => {
-      state.loading = true;
-    })
+    builder
+      .addCase(removeAccount.fulfilled, (state, _) => {
+        state.loading = false;
+      })
+      .addDefaultCase((state) => {
+        state.loading = true;
+      });
   },
 });
 

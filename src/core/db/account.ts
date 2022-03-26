@@ -4,7 +4,7 @@ import send from './send';
 export function getAll() {
   return send<Account[]>({
     entity: 'account',
-    operation: 'getall'
+    operation: 'getall',
   });
 }
 
