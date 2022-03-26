@@ -155,7 +155,7 @@ const AccountComp = () => {
                   color="primary"
                   type="button"
                   style={{ marginRight: 5 }}
-                  disabled={loading || newBalanceAmount < 1}
+                  disabled={loading || newBalanceAmount === 0}
                   onClick={() => {
                     addBalance(account.id);
                   }}
