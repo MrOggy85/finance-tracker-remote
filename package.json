@@ -17,7 +17,7 @@
     "test": "react-scripts test",
     "lint": "eslint electron/**/* && eslint src/**/*",
     "postinstall": "install-app-deps",
-    "dev": "concurrently -k \"BROWSER=none npm start\" \"npm:electron\"",
+    "dev": "concurrently -k \"BROWSER=none yarn start\" \"yarn:electron\"",
     "electron": "tsc --project electron/tsconfig.json && electron ./build/electron/main.js",
     "electron:build": "tsc --project electron/tsconfig.json",
     "electron:watch": "tsc --watch --project electron/tsconfig.json"
